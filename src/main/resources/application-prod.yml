@@ -1,0 +1,17 @@
+server:
+  port: 8085
+#  context-path: /girl
+girl:
+  cupSize: F
+  age: 18
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/dbgirl
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+#content: "cupSize: ${cupSize} , age: ${age}"
