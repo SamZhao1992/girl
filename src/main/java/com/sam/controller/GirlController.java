@@ -1,8 +1,15 @@
-package com.sam;
+package com.sam.controller;
 
+import com.sam.domain.Girl;
+import com.sam.domain.Result;
+import com.sam.repository.GirlRepository;
+import com.sam.service.GirlService;
+import com.sam.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -16,7 +23,7 @@ public class GirlController {
     private GirlRepository girlRepository;
 
     @Autowired
-    private GirlService GirlServive;
+    private GirlService girlServive;
 
     @GetMapping(value = "/girls")
     public List<Girl> girlList(){
@@ -24,11 +31,14 @@ public class GirlController {
     }
 
     @PostMapping(value = "/girls")
-    public Girl girlAdd(@RequestParam("age") Integer age, @RequestParam("cupSize") String cupSize){
-        Girl girl = new Girl();
-        girl.setAge(age);
-        girl.setCupSize(cupSize);
-        return girlRepository.save(girl);
+    public Result<Girl> girlAdd(@Valid Girl girl, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return ResultUtil.error(1, bindingResult.getFieldError().getDefaultMessage());
+        }
+        girl.setAge(girl.getAge());
+        girl.setCupSize(girl.getCupSize());
+        girlRepository.save(girl);
+        return ResultUtil.success(girl);
     }
 
     //查询
@@ -60,6 +70,11 @@ public class GirlController {
 
     @PostMapping(value = "/girl/two")
     public void getTwo(){
-        GirlServive.insertTwo();
+        girlServive.insertTwo();
+    }
+
+    @GetMapping(value = "/girl/getAge/{id}")
+    public void getAge(@PathVariable("id") Integer id) throws Exception {
+        girlServive.getAge(id);
     }
 }

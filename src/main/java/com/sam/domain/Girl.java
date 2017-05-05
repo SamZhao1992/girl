@@ -1,8 +1,10 @@
-package com.sam;
+package com.sam.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by SamZhao on 2017/5/4.
@@ -13,7 +15,20 @@ public class Girl {
     @GeneratedValue
     private Integer id;
     private String cupSize;
+
+    @Min(value = 18, message = "未成年")
     private Integer age;
+
+    @NotNull(message = "金额必须")
+    private Integer money;
+
+    public Integer getMoney() {
+        return money;
+    }
+
+    public void setMoney(Integer money) {
+        this.money = money;
+    }
 
     public Girl() {
     }
@@ -40,5 +55,14 @@ public class Girl {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return "Girl{" +
+                "id=" + id +
+                ", cupSize='" + cupSize + '\'' +
+                ", age=" + age +
+                '}';
     }
 }

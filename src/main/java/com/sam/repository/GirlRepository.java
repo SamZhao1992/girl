@@ -1,5 +1,6 @@
-package com.sam;
+package com.sam.repository;
 
+import com.sam.domain.Girl;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
